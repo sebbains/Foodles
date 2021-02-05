@@ -1,8 +1,12 @@
 const baseUrl = 'https://foodish-api.herokuapp.com/api/images/';
 const image = document.querySelector('.imageGame');
+const allBlocks = document.querySelectorAll('.recBlocks');
 const buttons = document.querySelectorAll('.btn');
 let category;
+let endRound = false;
 let endGame = false;
+let round = 1;
+let remainingBlocks = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 // get available image from API from provided category
 async function getImage(category) {
@@ -45,34 +49,58 @@ function getCategory(){
 
 // handles button click to check if guess was correct
 function checkGuess(){
+    if(endRound) return;
     const guess = this.innerText.toLowerCase();
     const result = guess === category? 'win' : 'lose';
+    endRound = true;
+    allBlocks.forEach(block => block.classList.add('hide'));
     console.log(result);
 }
 
-// 
+// grabs 1 block from remaining selection
 function getBlock(){
-    const randomNum = Math.floor((Math.random() * 9)+1);
-    const block = document.querySelector(`#recBlock${randomNum}`);
+    const randomNum = Math.floor((Math.random() * remainingBlocks.length));
+    number = remainingBlocks.splice(randomNum, 1)
+    const block = document.querySelector(`#recBlock${number}`);
     return block;
 }
 
-// periodically removes random block
-function removeBlocks(){
-    setInterval(() => {
-        if(endGame) return;
-        const block = getBlock();
-        if(block.classList.contains('hide')){
-            console.log("matched")
-            getBlock();;
-        }else{
-            block.classList.add('hide');
-            console.log("removed")
-        }
-    }, 3000);
+// reset
+function resetRound(){
+    endRound = false;
+    remainingBlocks = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    allBlocks.forEach(block => block.classList.remove('hide'));
+    getImage(getCategory());
 }
 
-// startup image
-getImage(getCategory());
+// periodically removes random block
+var removeBlocks = function(){
+    if( endRound || remainingBlocks.length === 0){
+        clearInterval(startRound);
+        return;
+    }
+    const block = getBlock();
+    block.classList.add('hide');
+}
+
+// start Round
+function startRound(){
+    removeBlocks();
+    var roundInterval = setInterval(() => {
+        if( endRound || remainingBlocks.length === 0){
+            clearInterval(roundInterval);
+            return;
+        }
+        const block = getBlock();
+        block.classList.add('hide');
+    }, 1000);
+}
+
+// start Game
+function startGame(){
+    getImage(getCategory());
+    startRound();
+}
+
 // event listeners
 buttons.forEach( button => button.addEventListener('click', checkGuess));

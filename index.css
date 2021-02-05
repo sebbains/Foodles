@@ -6,11 +6,20 @@
 
 body {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100vw;
   height: 100vh;
   margin: 0;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background-color: red;
 }
 
 main {
@@ -24,19 +33,20 @@ main {
 }
 
 .imageGame {
-  width: 80%;
-  height: 80%;
+  width: 60%;
+  height: 60%;
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
 }
 
 .recBlocks {
-  flex-basis: 33%;
+  flex-basis: 33.33%;
   background-color: #000;
-  transition: all 2s linear;
+  transition: all 1s linear;
 }
 
 .recBlocks.hide {
