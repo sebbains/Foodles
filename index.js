@@ -5,8 +5,13 @@ const buttons = document.querySelectorAll('.btn');
 let category;
 let endRound = false;
 let endGame = false;
+const roundNumber = document.querySelector('.roundNum');
 let round = 1;
 let remainingBlocks = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const pointsNumber = document.querySelector('.pointsNum');
+let points = 100;
+const totalPointsNum = document.querySelector('.totalPointsNum');
+let totalPoints = 0;
 
 // get available image from API from provided category
 async function getImage(category) {
@@ -51,10 +56,14 @@ function getCategory(){
 function checkGuess(){
     if(endRound) return;
     const guess = this.innerText.toLowerCase();
-    const result = guess === category? 'win' : 'lose';
+    const winRound = guess === category? true : false;
+    if(winRound){
+        totalPoints += points;
+        totalPointsNum.innerText = totalPoints;
+    }
     endRound = true;
     allBlocks.forEach(block => block.classList.add('hide'));
-    console.log(result);
+    console.log(`did you win? : ${winRound}`);
 }
 
 // grabs 1 block from remaining selection
@@ -69,8 +78,12 @@ function getBlock(){
 function resetRound(){
     endRound = false;
     remainingBlocks = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    allBlocks.forEach(block => block.classList.remove('hide'));
     getImage(getCategory());
+    allBlocks.forEach(block => block.classList.remove('hide'));
+    points = 100;
+    pointsNumber.innerText = points;
+    round++;
+    roundNumber.innerText = round;
 }
 
 // periodically removes random block
@@ -83,6 +96,17 @@ var removeBlocks = function(){
     block.classList.add('hide');
 }
 
+// start coutdown
+function startCountdown(){
+    setInterval(() => {
+        if( points <= 0 || endRound) {
+            return;
+        }
+        points = points - 10;
+        pointsNumber.innerText = points;
+    }, 1000);
+}
+
 // start Round
 function startRound(){
     removeBlocks();
@@ -91,8 +115,12 @@ function startRound(){
             clearInterval(roundInterval);
             return;
         }
+        // remove blocks
         const block = getBlock();
         block.classList.add('hide');
+        // reduce points
+        points = points - 10;
+        pointsNumber.innerText = points;
     }, 1000);
 }
 
