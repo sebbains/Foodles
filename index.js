@@ -6,12 +6,15 @@ let category;
 let endRound = false;
 let endGame = false;
 const roundNumber = document.querySelector('.roundNum');
-let round = 1;
+let round = 0;
 let remainingBlocks = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const pointsNumber = document.querySelector('.pointsNum');
-let points = 100;
+let points = 80;
 const totalPointsNum = document.querySelector('.totalPointsNum');
 let totalPoints = 0;
+const roundBuffer = document.querySelector('.roundBuffer');
+const roundButton = document.querySelector('.roundButton');
+const roundMessage = document.querySelector('.roundMessage');
 
 // get available image from API from provided category
 async function getImage(category) {
@@ -22,7 +25,6 @@ async function getImage(category) {
         const response = await fetch(url);
         const data = await response.json();
         const foodImage = data.image;
-        console.log(category);
         image.setAttribute('style', `background-image: url(${foodImage}`);
     } catch( err) {
         console.log(err);
@@ -63,7 +65,12 @@ function checkGuess(){
     }
     endRound = true;
     allBlocks.forEach(block => block.classList.add('hide'));
-    console.log(`did you win? : ${winRound}`);
+    let roundText = winRound? 'Congrats! you were right!' : 'Sorry you were wrong :(';
+    let endText = endGame? `You scored ${totalPoints} points!` : ``;
+    roundMessage.innerHTML = `<p>${roundText}</p><p>${endText}</p>`;
+    const buttonText = endGame? 'Start New Game' : 'Start Next Round';
+    roundButton.innerText = buttonText;
+    roundBuffer.classList.remove('hide');
 }
 
 // grabs 1 block from remaining selection
@@ -78,15 +85,19 @@ function getBlock(){
 function resetRound(){
     endRound = false;
     remainingBlocks = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    getImage(getCategory());
     allBlocks.forEach(block => block.classList.remove('hide'));
-    points = 100;
+    points = 80;
     pointsNumber.innerText = points;
-    round++;
+    if( round >= 5){
+        endGame = true;
+    }
     roundNumber.innerText = round;
+    setTimeout(() => {
+        getImage(getCategory());
+    }, 500);
 }
 
-// periodically removes random block
+// periodically removes random remaining block
 var removeBlocks = function(){
     if( endRound || remainingBlocks.length === 0){
         clearInterval(startRound);
@@ -94,17 +105,6 @@ var removeBlocks = function(){
     }
     const block = getBlock();
     block.classList.add('hide');
-}
-
-// start coutdown
-function startCountdown(){
-    setInterval(() => {
-        if( points <= 0 || endRound) {
-            return;
-        }
-        points = points - 10;
-        pointsNumber.innerText = points;
-    }, 1000);
 }
 
 // start Round
@@ -124,11 +124,19 @@ function startRound(){
     }, 1000);
 }
 
-// start Game
-function startGame(){
-    getImage(getCategory());
-    startRound();
+// show intro slide/ new round
+function newRound(){
+    if( endGame){
+        totalPoints = 0;
+        round = 0;
+        endGame = !endGame;
+    }
+    round++;
+    resetRound();
+    setTimeout(startRound, 1500);
+    roundBuffer.classList.add('hide');
 }
 
 // event listeners
 buttons.forEach( button => button.addEventListener('click', checkGuess));
+roundButton.addEventListener('click', newRound);
