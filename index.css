@@ -106,6 +106,9 @@ main {
   border-radius: 5px;
   text-align: center;
   transition: all 0.5s linear;
+  display: flex;
+  align-content: center;
+  justify-content: center;
 }
 
 .pointsNum {
