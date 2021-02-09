@@ -1,7 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+:root {
+  --btn-back: #6a0dad;
+  --btn-hover: #0016ff;
+  --bar-back: rgba(106, 13, 173, 0.3);
+  --bar-fill: linear-gradient(
+    0deg,
+    rgba(106, 13, 173, 1) 0%,
+    rgba(0, 22, 255, 1) 100%
+  );
 }
 
 body {
@@ -12,23 +25,22 @@ body {
   width: 100vw;
   height: 100vh;
   margin: 0;
+  font-family: "Montserrat", sans-serif;
 }
 
 header {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   width: 100%;
-  background-color: red;
   z-index: 1;
 }
 
 main {
-  background-color: blue;
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
 }
@@ -38,7 +50,7 @@ main {
   position: absolute;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
@@ -62,21 +74,79 @@ main {
   padding: 1em;
 }
 
+.pointsBar {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.bar {
+  width: 25%;
+  height: 66%;
+  border: none;
+  background: var(--bar-back);
+  color: #fff;
+  border-radius: 5px;
+  transition: all 0.4s ease 0s;
+  position: relative;
+  -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+  -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+  box-shadow: 5px 40px -10px rgba(0, 0, 0, 0.57);
+}
+
+.currentPoints {
+  background: var(--bar-fill);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  border-radius: 5px;
+  text-align: center;
+  transition: all 0.5s linear;
+}
+
+.pointsNum {
+  font-size: 2em;
+}
+
 .imageGame {
-  width: 60%;
-  height: 60%;
+  flex: 2;
+  height: 66%;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+  -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+  box-shadow: 5px 40px -10px rgba(0, 0, 0, 0.57);
 }
 
 .recBlocks {
-  flex-basis: 33.33%;
-  background-color: #000;
+  flex-basis: 33.33333333%;
+  background-color: var(--btn-back);
   transition: all 0.5s linear;
+}
+
+.recBlocks:nth-child(1) {
+  border-radius: 5px 0 0 0;
+}
+
+.recBlocks:nth-child(3) {
+  border-radius: 0 5px 0 0;
+}
+
+.recBlocks:nth-child(7) {
+  border-radius: 0 0 0 5px;
+}
+
+.recBlocks:nth-child(9) {
+  border-radius: 0 0 5px 0;
 }
 
 .recBlocks.hide {
@@ -84,13 +154,48 @@ main {
 }
 
 .btnContainer {
-  width: 100%;
+  flex: 1;
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.btn {
-  flex: 1;
+button {
   padding: 1em;
   margin: 1em;
+  width: 50%;
+  border: none;
+  background: var(--btn-back);
+  color: #fff !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 5px;
+  display: inline-block;
+  transition: all 0.4s ease 0s;
+}
+
+button:hover {
+  background: var(--btn-hover);
+  letter-spacing: 1px;
+  -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+  -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+  box-shadow: 5px 40px -10px rgba(0, 0, 0, 0.57);
+  transition: all 0.4s ease 0s;
+}
+
+.won {
+  color: green;
+}
+
+.lost {
+  color: red;
+}
+
+.endPoints {
+  font-size: 1.5em;
+}
+
+.endRounds {
+  font-size: 0.75em;
 }
