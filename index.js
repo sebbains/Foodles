@@ -138,7 +138,6 @@ function startRound(){
         const block = getBlock();
         block.classList.add('hide');
     }, 1000);
-    console.log(mediaQuery)
     var pointsInterval = setInterval(() => {
         if( endRound || remainingBlocks.length === 0){
             clearInterval(pointsInterval);
