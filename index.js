@@ -17,6 +17,7 @@ const roundBuffer = document.querySelector('.roundBuffer');
 const roundButton = document.querySelector('.roundButton');
 const roundMessage = document.querySelector('.roundMessage');
 const roundResults = [];
+let mediaQuery = window.matchMedia('(max-width: 600px)');
 
 // get available image from API from provided category
 async function getImage(category) {
@@ -89,7 +90,7 @@ function checkGuess(){
 // grabs 1 block from remaining selection
 function getBlock(){
     const randomNum = Math.floor((Math.random() * remainingBlocks.length));
-    number = remainingBlocks.splice(randomNum, 1)
+    const number = remainingBlocks.splice(randomNum, 1)
     const block = document.querySelector(`#recBlock${number}`);
     return block;
 }
@@ -101,8 +102,10 @@ function resetRound(){
     allBlocks.forEach(block => block.classList.remove('hide'));
     points = 80;
     pointsNumber.innerText = points;
-    const barHeight = ( points / 80) * 100;
+    const barHeight =  mediaQuery.matches? 100 : (points / 80) * 100;
+    const barWidth =  mediaQuery.matches? (points / 80) * 100 : 100;
     currentPointsBar.style.height = `${barHeight}%`;
+    currentPointsBar.style.width = `${barWidth}%`;
     if( round >= 5){
         endGame = true;
     }
@@ -135,6 +138,7 @@ function startRound(){
         const block = getBlock();
         block.classList.add('hide');
     }, 1000);
+    console.log(mediaQuery)
     var pointsInterval = setInterval(() => {
         if( endRound || remainingBlocks.length === 0){
             clearInterval(pointsInterval);
@@ -143,8 +147,10 @@ function startRound(){
         // reduce points
         points = points - 1;
         pointsNumber.innerText = points;
-        const barHeight = ( points / 80) * 100;
+        const barHeight =  mediaQuery.matches? 100 : (points / 80) * 100;
+        const barWidth =  mediaQuery.matches? (points / 80) * 100 : 100;
         currentPointsBar.style.height = `${barHeight}%`;
+        currentPointsBar.style.width = `${barWidth}%`;
     }, 100);
 }
 

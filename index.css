@@ -199,3 +199,55 @@ button:hover {
 .endRounds {
   font-size: 0.75em;
 }
+
+@media only screen and (max-width: 600px) {
+  body,
+  button {
+    font-size: 0.8em;
+  }
+
+  .topBar {
+    margin-top: 1.5em;
+    flex-direction: column;
+  }
+
+  h1 {
+    margin: 0;
+  }
+
+  main {
+    flex-direction: column;
+  }
+
+  .roundBuffer {
+    padding: 2em;
+  }
+
+  .pointsBar {
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .bar {
+    width: 80%;
+    height: 25%;
+  }
+
+  .currentPoints {
+    right: 0;
+  }
+
+  .imageGame {
+    width: 80%;
+  }
+
+  .btnContainer {
+    margin-top: 1.5em;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    width: 30%;
+  }
+}
