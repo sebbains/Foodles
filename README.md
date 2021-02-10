@@ -24,9 +24,8 @@ This week's challenge (3rd Feb 2021) was to create any app we can imagine using 
 
 ### Result
 
-:tada: **2nd** with 19 votes :tada:
+:tada: **2nd** with 19 votes after being featured on the Scrimba Live Channel :tada:
 
-Featured on the
 [![Scrimba Weekly Web Dev Challenge Live](http://img.youtube.com/vi/_KdwmOw3TMc/0.jpg)](https://www.youtube.com/watch?v=_KdwmOw3TMc)
 
 ### Built on

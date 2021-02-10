@@ -233,6 +233,10 @@ button:hover {
     height: 10%;
   }
 
+  .pointsNum {
+    font-size: 1.5em;
+  }
+
   .bar {
     width: 80%;
     height: 60%;
@@ -244,6 +248,7 @@ button:hover {
 
   .imageGame {
     width: 80%;
+    flex: 4;
   }
 
   .btnContainer {
